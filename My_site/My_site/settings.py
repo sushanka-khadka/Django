@@ -137,7 +137,7 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = 'files/'  # URL to access media files
+MEDIA_URL = '/files/'  # URL to access media files
 MEDIA_ROOT = BASE_DIR / 'uploads'  # Directory for uploaded media 
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
