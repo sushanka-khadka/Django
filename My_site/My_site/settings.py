@@ -27,11 +27,13 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('is_development', False)
 
 ALLOWED_HOSTS = [    
-    'blog-site-0c5s.onrender.com'
+    # 'blog-site-0c5s.onrender.com'
+    '*'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://*.onrender.com',
+    # 'https://*.onrender.com',
+    '*'
 ]
 
 
