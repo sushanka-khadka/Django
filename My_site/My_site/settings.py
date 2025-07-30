@@ -30,6 +30,10 @@ ALLOWED_HOSTS = [
     'blog-site-0c5s.onrender.com'
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.co',
+]
+
 
 # Application definition
 
