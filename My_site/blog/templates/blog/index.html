@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}My Blog{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/index.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/post.css' %}">
+{% endblock %}
+
+
+{% block content %}  
+    <section id="welcome">
+        <header>
+            <img src="{% static 'blog/images/kids.jpg' %}" alt="john doe blog image">
+            <h2>John's Blog</h2>
+        </header>
+        <p>Welcome to my blog! Here you will find posts about various topics that interest me. Feel free to explore and enjoy reading!</p>
+    </section>
+
+    <section id="latest-posts">
+        <h2>My Latest Thoughts</h2>
+        <ul>
+            {% for post in posts %}
+                {% include 'blog/includes/post.html' %}
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section id="about">
+        <h2>What I Do</h2>
+        <p>I am a passionate blogger who loves to share insights on various topics including technology, travel, and lifestyle. My goal is to inspire and engage readers through my writing.</p>
+        <p>Feel free to connect with me on social media or drop me an email if you have any questions or just want to say hi!</p>
+    </section>
+{% endblock %}
