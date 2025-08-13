@@ -11,7 +11,7 @@
 {% if meetup_found %}
     <main>
         <article>
-            <img src="https://picsum.photos/200" alt="meetup-image" id="main-image">
+            <img src="{{ meetup_item.featured_image.url }}" alt="meetup-image" id="main-image">
             <section id="location">
                 <h2>Meetup location</h2>
                 <address>This meetup takes place in <span>{{ meetup_item.location }}</span>(ADDRESS)</address>

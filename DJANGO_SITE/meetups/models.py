@@ -6,6 +6,7 @@ class Meetup(models.Model):
     location = models.CharField(max_length=100, default='yet do decide')
     slug= models.SlugField(unique=True)
     description= models.TextField()
-
+    featured_image= models.ImageField(upload_to='images')
+    
     def __str__(self):
         return self.title

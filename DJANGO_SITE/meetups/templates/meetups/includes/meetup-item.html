@@ -1,9 +1,10 @@
+{% load static %}
 {% for meetup_item in meetups %}
 <li class="meetup-item">
     <article>
         <div class="meetup-summary">
             <div class="meetup-image">
-                <img src="https://picsum.photos/200" alt="meetup-img">
+                <img src="{{ meetup_item.featured_image.url }}" alt="meetup-img">
             </div>
             <div class="meetup-details">
                 <h3>{{ meetup_item.title }}</h3>
