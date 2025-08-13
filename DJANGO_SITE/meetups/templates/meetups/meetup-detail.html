@@ -10,14 +10,14 @@
 {% block  content %} 
     <main>
         <article>
-            <img src="" alt="">
-            <section>
+            <img src="https://picsum.photos/200" alt="meetup-image" id="main-image">
+            <section id="location">
                 <h2>Meetup location</h2>
-                <address>This meetup takes place in <span>{{ location }}</span>(ADDRESS)</address>
+                <address>This meetup takes place in <span>{{ meetup_item.location }}</span>(ADDRESS)</address>
             </section>
             <section id="details">
                 <h2>What's The Meeting About?</h2>
-                <p>{{ meetup_description }} </p>
+                <p>{{ meetup_item.description }} </p>
                 <footer>
                     <p>Need more details? Please <a href="">contact the orgainzer</a> but don't spam us.</p>
                 </footer>

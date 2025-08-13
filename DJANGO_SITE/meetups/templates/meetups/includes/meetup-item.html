@@ -1,17 +1,17 @@
 {% for meetup_item in meetups %}
 <li class="meetup-item">
     <article>
-        <div>
-            <div>
-                <img src="">
+        <div class="meetup-summary">
+            <div class="meetup-image">
+                <img src="https://picsum.photos/200" alt="meetup-img">
             </div>
-            <div>
+            <div class="meetup-details">
                 <h3>{{ meetup_item.title }}</h3>
                 <address>{{ meetup_item.location }}</address>
             </div>
         </div>
-        <div>
-            <a href="{% url 'meetup-detail' meetup_item.slug %}">More Details></a>
+        <div class="meetup-actions">
+            <a href="{% url 'meetup-detail' meetup_item.slug %}" class="btn">More Details</a>
         </div>
     </article>
 </li>
