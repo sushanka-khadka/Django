@@ -1,0 +1,17 @@
+# Ignore Python cache folders and compiled files
+__pycache__/
+*.pyc
+
+# Virtual environment
+meetup_venv/
+
+# Ignore environment files
+.env
+
+# Ignore local SQLite database
+db.sqlite3
+
+# Ignore IDE/editor config folders
+.vscode/
+.idea/
+
