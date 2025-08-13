@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block  content %} 
+{% if meetup_found %}
     <main>
         <article>
             <img src="https://picsum.photos/200" alt="meetup-image" id="main-image">
@@ -28,4 +29,7 @@
             </section>
         </article>
     </main>
+{% else %}
+<p>Sorry, No meetup found!</p>
+{% endif %}
 {% endblock %}

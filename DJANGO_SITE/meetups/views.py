@@ -11,7 +11,13 @@ def index(request):
 
 
 def meetup_details(request, meetup_slug):
-    selected_meetup= Meetup.objects.get(slug=meetup_slug)
-    return render(request, 'meetups/meetup-detail.html', {
-        'meetup_item': selected_meetup
-    });
+    try:
+        selected_meetup= Meetup.objects.get(slug=meetup_slug)
+        return render(request, 'meetups/meetup-detail.html', {
+            'meetup_found': True,
+            'meetup_item': selected_meetup
+        });
+    except:
+        return render(request, 'meetups/meetup-detail.html', {
+            'meetup_found': False
+        });
