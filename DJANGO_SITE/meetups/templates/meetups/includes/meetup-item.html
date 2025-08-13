@@ -1,0 +1,18 @@
+{% for meetup_item in meetups %}
+<li class="meetup-item">
+    <article>
+        <div>
+            <div>
+                <img src="">
+            </div>
+            <div>
+                <h3>{{ meetup_item.title }}</h3>
+                <address>{{ meetup_item.location }}</address>
+            </div>
+        </div>
+        <div>
+            <a href="{% url 'meetup-detail' meetup_item.slug %}">More Details></a>
+        </div>
+    </article>
+</li>
+{% endfor %}
