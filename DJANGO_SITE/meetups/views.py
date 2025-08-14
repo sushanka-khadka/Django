@@ -18,16 +18,15 @@ def meetup_details(request, meetup_slug):
         else:
             registration_form = RegistrationForm(request.POST)
             if registration_form.is_valid():
-                registration_form.save()
-                return redirect('confirm-registration')
-            
+                participant =registration_form.save()   # saving form to model Participant
+                selected_meetup.participants.add(participant)   # adding to many to many field
+                return redirect('confirm-registration')            
         return render(request, 'meetups/meetup-detail.html', {
             'meetup_found': True,
             'meetup_item': selected_meetup,
             'form': registration_form
         });
     except:
-        print('\n\ninside except::\n\n')
         return render(request, 'meetups/meetup-detail.html', {
             'meetup_found': False
         });
