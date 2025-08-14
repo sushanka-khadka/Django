@@ -10,11 +10,9 @@
 </head>
 <body>
     <header id="main-header">
-        <nav><a href="" id="main-logo">DjangoMeetups</a></nav>
+        <nav><a href="/" id="main-logo">DjangoMeetups</a></nav>
         <h1>{% block main_heading %}{% endblock %}</h1>
-        {% block header_content %} {% endblock %}
-        <h1>We got great meetups calling up!</h1>
-        <p>Find out the one that best suits your needs!</p>        
+        {% block header_content %} {% endblock %}        
     </header>
     <main>
         {% block  content %} {% endblock %}

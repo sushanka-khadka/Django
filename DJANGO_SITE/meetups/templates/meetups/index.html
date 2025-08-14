@@ -6,13 +6,20 @@
     <link rel="stylesheet" href="{% static 'meetups/styles/all-meetups.css' %}">
 {% endblock %}
 
+{% block main_heading %}
+We got great meetups calling up! 
+{% endblock %}
+
+{% block header_content %}
+<p>Find out the one that best suits your needs!</p>        
+{% endblock %}
+
+
 {% block  content %} 
-    <main>
-        <section>
-            <h2>Upcoming Meetups</h2>
-            <ol>
-                {% include 'meetups/includes/meetup-item.html' %}
-            </ol>                                        
-        </section>
-    </main>
+    <section>
+        <h2>Upcoming Meetups</h2>
+        <ol>
+            {% include 'meetups/includes/meetup-item.html' %}
+        </ol>                                        
+    </section>    
 {% endblock %}

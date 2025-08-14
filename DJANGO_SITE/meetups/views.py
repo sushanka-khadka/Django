@@ -29,7 +29,6 @@ def meetup_details(request, meetup_slug):
             'form': registration_form
         });
     except Exception as ex:
-        print(ex)
         return render(request, 'meetups/meetup-detail.html', {
             'meetup_found': False
         });
