@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>sdfasdfsdaf</p>
+    <ul>
+    {% for project in projects %}
+    <li>{{ project }}</li>
+    {% endfor %}
+    </ul>
+
+    <!-- Header Section -->
+<header class="header">
+    <div class="container container--narrow">
+        <a href="#" class="header__logo">
+            <img src="#" alt="DevSearch Logo" />
+        </a>
+
+        <nav class="header__nav">
+            <input type="checkbox" id="responsive-menu" />
+            <label for="responsive-menu" class="toggle-menu">
+                <span>Menu</span>
+                <div class="toggle-menu__lines"></div>
+            </label>
+
+        </nav>
+    </div>
+</header>
+
+
+
+</body>
+</html>
