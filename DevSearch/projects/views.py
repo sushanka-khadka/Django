@@ -1,10 +1,20 @@
-from django.shortcuts import render, HttpResponse
-
+from django.shortcuts import render
+from django.db.models import Q
 from .models import Project
 
 # Create your views here.
-def projects(request):    
-    projects = Project.objects.all()
+def projects(request):
+    # projects = Project.objects.all()
+    search_query = request.GET.get('search_query')
+    search_query = search_query if search_query else ''
+
+    projects = Project.objects.filter(
+        Q(title__icontains = search_query) |
+        Q(description__icontains = search_query) |
+        Q(owner__name__icontains = search_query) 
+    )
+    
+    
     return render(request, 'projects/projects.html', {'projects': projects})
 
 
