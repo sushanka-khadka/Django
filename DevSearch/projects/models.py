@@ -3,7 +3,7 @@ import uuid
 
 # Create your models here.
 class Project(models.Model):
-    # owner
+    owner = models.ForeignKey('users.Profile', on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     feature_image = models.ImageField(null=True, blank=True, default="projects/default.jpg", upload_to="projects/")
@@ -24,7 +24,7 @@ class Review(models.Model):
         ('up', 'Up Vote'),
         ('down', 'Down Vote'),
     )
-    # owner 
+    owner = models.ForeignKey('users.Profile', on_delete=models.SET_NULL, null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     body = models.TextField(null=True, blank=True)
     value = models.CharField(choices=Vote_Type)

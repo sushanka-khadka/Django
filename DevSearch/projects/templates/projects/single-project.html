@@ -41,7 +41,7 @@
                 <div class="comments">
                     <h3 class="singleProject__subtitle">Feedback</h3>
                     <h5 class="project--rating">
-                        36% Postitive Feedback (18 Votes)
+                        {{ project.vote_ratio }}% Postitive Feedback ({{ project.vote_total }} Vote{{ project.vote_total|pluralize:"s" }})
                     </h5>
 
                     <form class="form" action="#" method="POST">
@@ -54,10 +54,11 @@
                         <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
                     </form>
                     <div class="commentList">
+                        {% for review in project.reviews.all %}                        
                         <div class="comment">
                             <a href="profile.html">
                                 <img class="avatar avatar--md"
-                                    src="https://pbs.twimg.com/profile_images/1335382240931368961/b3wSZKj4_400x400.jpg"
+                                    src="#"
                                     alt="user" />
                             </a>
                             <div class="comment__details">
@@ -73,6 +74,7 @@
                                 </p>
                             </div>
                         </div>
+                        {% endfor %}
                         <div class="comment">
                             <a href="profile.html">
                                 <img class="avatar avatar--md" src="https://avatars.githubusercontent.com/u/33843378"
