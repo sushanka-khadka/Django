@@ -1,12 +1,16 @@
 from django.shortcuts import render
 from .models import Profile
-
+from .utils import searchProfiles, paginateProfile
 
 # Create your views here.
 
 def profiles(request):
-    profiles = Profile.objects.all()
-    return render(request, 'users/profiles.html', {'profiles': profiles})
+    # profiles = Profile.objects.all()
+    profiles, search_query = searchProfiles(request)
+    profiles, custom_range = paginateProfile(request, profiles, results=6)  
+    context = {'profiles': profiles, 'search_query':search_query, 'custom_range': custom_range}
+
+    return render(request, 'users/profiles.html', context)
 
 def profile(request, pk):
     profile = Profile.objects.get(id=pk)
