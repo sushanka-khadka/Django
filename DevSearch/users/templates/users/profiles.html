@@ -41,12 +41,12 @@
                                 </div>
                             </div>
                             <p class="dev__info">
-                                {{ profile.bio }}
+                                {{ profile.bio | linebreaks | truncatechars:200 }}
                             </p>
                             <div class="dev__skills">                                
                                 {% for skill in profile.skills.all %}
                                 <span class="tag tag--pill tag--main">
-                                    <small>skill</small>
+                                    <small>{{ skill.name }}</small>
                                 </span>
                                 {% endfor %}
                             </div>
@@ -76,6 +76,5 @@
     </div>
 </main>
 </body>
-
 
 {% endblock %}
