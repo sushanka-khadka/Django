@@ -1,14 +1,21 @@
-// Invoke Functions Call on Document Loaded
-document.addEventListener('DOMContentLoaded', function () {
-  hljs.highlightAll();
+document.addEventListener('DOMContentLoaded', function() {
+  let alertWrappers = document.querySelectorAll('.alert');
+
+  alertWrappers.forEach(alertWrapper => {
+    let alertClose = alertWrapper.querySelector('.alert__close');
+
+    const closeAlert = () => {
+      alertWrapper.style.display = 'none';
+    }
+
+    // Manual close on click
+    if (alertClose) {
+      alertClose.addEventListener('click', closeAlert);
+    }
+
+    // auto close after 3 seconds
+    setTimeout(closeAlert, 3000);
+
+  });
 });
 
-
-let alertWrapper = document.querySelector('.alert')
-let alertClose = document.querySelector('.alert__close')
-
-if (alertWrapper) {
-  alertClose.addEventListener('click', () =>
-    alertWrapper.style.display = 'none'
-  )
-}
