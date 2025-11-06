@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Profile
 from .utils import searchProfiles, paginateProfile
 
@@ -13,24 +13,46 @@ def loginUser(request):
         username = request.POST['username']
         password = request.POST['password']
         
-        try:
-            user = User.objects.get(username=username)
-        except:
-            messages.error(request, 'User does not exist')
-        
         user = authenticate(request, username=username, password=password)
         if user is not None:    # if verified user
             login(request, user)
             messages.success(request, 'Successfully Logged in.')
             return render(request, 'users/my-account.html')
         else:
-            messages.error(request, 'Username or Passowrd incorrect !!!')   
-        
+            messages.error(request, 'Username or Passowrd incorrect !!!')           
 
     return render(request, 'users/login_register.html', {'page': page})
 
 def logoutUser(request):
+    logout(request)
+    messages.info(request, 'User was logged out!')
+    return redirect('login')
+    
+from django.contrib.auth.forms import UserCreationForm
+from .forms import CustomUserCreationForm
+def registerUser(request):
+    page = 'register'
+    form = CustomUserCreationForm()
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False) # to modify user before saving
+            user.username = user.username.lower()   # why to lower case? to avoid duplicate usernames with different cases
+            user.first_name = user.first_name.title() # capitalize first letter
+            user.last_name = user.last_name.title()   # capitalize first letter
+            user.save()
+            messages.success(request, "User account was created!")
+            login(request, user)
+            return redirect('profiles')
+        else:
+            messages.error(request, "An error has occurred during registration.")
+
+    return render(request, 'users/login_register.html', {'page': page, 'form':form})
+
+
+def edit_account(request):
     pass
+
 
 
 def profiles(request):
