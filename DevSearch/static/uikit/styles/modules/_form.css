@@ -40,6 +40,8 @@ input.input[type='text'],
 input.input[type='email'],
 input.input[type='password'],
 input.input[type='number'],
+input.input[type='url'],
+input.input[type='file'],
 select.input,
 textarea.input {
   min-width: 24rem;

@@ -8,10 +8,10 @@
             <div class="column column--1of3">
                 <div class="card text-center">
                     <div class="card__body dev">
-                        <a class="tag tag--pill tag--main settings__btn" href="#"><i class="fa-solid fa-edit"></i>
+                        <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-account' %}"><i
+                                class="fa-solid fa-edit"></i>
                             Edit</a>
-                        <img class="avatar avatar--xl dev__avatar"
-                            src="{{ profile.profile_image.url }}" />
+                        <img class="avatar avatar--xl dev__avatar" src="{{ profile.profile_image.url }}" />
                         <h2 class="dev__name">{{ profile.name }}</h2>
                         <p class="dev__title">{{ profile.short_intro }}</p>
                         <p class="dev__location">Based in {{profile.location}}</p>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="settings">
                     <h3 class="settings__title">Skills</h3>
-                    <a class="tag tag--pill tag--sub settings__btn tag--lg" href="#"><i class="fa-solid fa-plus"></i>
+                    <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create-skill' %}"><i class="fa-solid fa-plus"></i>
                         &nbsp;Add Skill</a>
                 </div>
 
@@ -64,25 +64,25 @@
                     {% for skill in profile.skills.all %}
                     <tr>
                         <td class="settings__tableInfo">
-                            <h4>{{skill}}</h4>
+                            <h4>{{skill.name}}</h4>
                             <p>
                                 {{skill.description}}
                             </p>
                         </td>
                         <td class="settings__tableActions">
-                            <a class="tag tag--pill tag--main settings__btn" href="#"><i class="fa-solid fa-edit"></i>
+                            <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-skill' skill.id %}"><i class="fa-solid fa-edit"></i>
                                 &nbsp;Edit</a>
-                            <a class="tag tag--pill tag--main settings__btn" href="#"><i
-                                    class="fa-solid fa-x-mark-circle-o"></i>
+                            <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-skill' skill.id %}?next=/my-account"><i
+                                    class="fa-solid fa-trash"></i>
                                 &nbsp;Delete</a>
                         </td>
                     </tr>
-                    {% endfor %}                    
+                    {% endfor %}
                 </table>
 
                 <div class="settings">
                     <h3 class="settings__title">Projects</h3>
-                    <a class="tag tag--pill tag--sub settings__btn tag--lg" href="#"><i class="fa-solid fa-plus"></i>
+                    <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create-project' %}"><i class="fa-solid fa-plus"></i>
                         &nbsp;Add Project</a>
                 </div>
 
@@ -90,7 +90,8 @@
                     {% for project in profile.project_set.all %}
                     <tr>
                         <td class="settings__thumbnail">
-                            <a href="{% url 'project' project.id %}"><img src="{{ project.feature_image.url }}" alt="Project Thumbnail" /></a>
+                            <a href="{% url 'project' project.id %}"><img src="{{ project.feature_image.url }}"
+                                    alt="Project Thumbnail" /></a>
                         </td>
                         <td class="settings__tableInfo">
                             <a href="{% url 'project' project.id %}">{{ project.title }}</a>
@@ -99,14 +100,13 @@
                             </p>
                         </td>
                         <td class="settings__tableActions">
-                            <a class="tag tag--pill tag--main settings__btn" href="#"><i class="fa-solid fa-edit"></i>
+                            <a class="tag tag--pill tag--main settings__btn" href="{%  url 'update-project' project.id %}"><i class="fa-solid fa-edit"></i>
                                 &nbsp;Edit</a>
-                            <a class="tag tag--pill tag--main settings__btn" href="#"><i
-                                    class="fa-solid fa-trash"></i>
+                            <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-project' project.id %}?next=/my-account"><i class="fa-solid fa-trash"></i>
                                 &nbsp;Delete</a>
                         </td>
                     </tr>
-                    {% endfor %}                    
+                    {% endfor %}
                 </table>
             </div>
         </div>
