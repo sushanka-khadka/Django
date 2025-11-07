@@ -28,6 +28,10 @@ def profile(request, pk):
 
 
 def loginUser(request):
+    if request.user.is_authenticated:       # if already logged in
+        messages.info(request, 'You are already logged in.')
+        return redirect('profiles')
+
     page = 'login'    
     if request.method == 'POST':
         username = request.POST['username']
@@ -37,7 +41,7 @@ def loginUser(request):
         if user is not None:    # if verified user
             login(request, user)
             messages.success(request, 'Successfully Logged in.')
-            return redirect('my-account')
+            return redirect(request.GET['next'] if 'next' in request.GET else 'my-account' )
         else:
             messages.error(request, 'Username or Passowrd incorrect !!!')           
 
