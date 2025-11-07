@@ -42,6 +42,7 @@ input.input[type='password'],
 input.input[type='number'],
 input.input[type='url'],
 input.input[type='file'],
+/* input.input[type='checkbox'], */
 select.input,
 textarea.input {
   min-width: 24rem;

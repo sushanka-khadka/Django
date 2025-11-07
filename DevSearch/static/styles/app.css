@@ -859,3 +859,24 @@ img {
   transform: translate(-50%, -50%);
   z-index: 99999;
 }
+
+/*=======================
+  Multiple Checkbox Select
+========================*/
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* adjust 120px as needed */
+    gap: 0.5rem 1rem; /* vertical + horizontal spacing */
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-item input[type="checkbox"] {
+    margin-right: 0.4rem;
+    width: 16px;
+    height: 16px;
+}

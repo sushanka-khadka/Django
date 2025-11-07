@@ -6,6 +6,10 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = '__all__'
         exclude = ['owner']
+        widgets = {
+            'tags': forms.CheckboxSelectMultiple(),
+        }
+
 
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
