@@ -23,7 +23,7 @@ class Profile(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 
     def __str__(self):
-        return str(self.first_name) + ' ' + str(self.last_name)
+        return (str(self.first_name) + ' ' + str(self.last_name)) if self.last_name else str(self.first_name)
 
 
 class Skill(models.Model):
@@ -34,7 +34,7 @@ class Skill(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 
     def __str__(self):
-        return f"{self.name} - ({self.owner.first_name})"
+        return f"{self.name} - ({self.owner})"
     
     class Meta:
         ordering = ['owner', '-description']

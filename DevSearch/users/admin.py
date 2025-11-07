@@ -6,8 +6,9 @@ from .models import Profile, Skill
 # admin.site.register(Profile)
 admin.site.register(Skill)
 
+@admin.register(Profile)    # using decorator to register model with admin site
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ['user', 'first_name', 'last_name', 'email', 'username', 'location']
 
 
-admin.site.register(Profile, ProfileAdmin)
+# admin.site.register(Profile, ProfileAdmin)    # not needed if decorator is used 

@@ -11,7 +11,8 @@ def searchProject(request):
     projects = Project.objects.filter(
         Q(title__icontains = search_query) |
         Q(description__icontains = search_query) |
-        Q(owner__name__icontains = search_query) |
+        Q(owner__first_name__icontains = search_query) |
+        Q(owner__last_name__icontains = search_query) |
         Q(tags__in = tags)
     ).distinct()   # # projects as a queryset from Project model
 
