@@ -10,7 +10,8 @@ def searchProfiles(request):
 
 
     profiles = Profile.objects.filter(
-        Q(name__icontains = search_query) |
+        Q(first_name__icontains = search_query) |
+        Q(last_name__icontains = search_query) |
         Q(short_intro__icontains = search_query) |        
         Q(skills__in = skills)
     ).distinct()   # profiles as a queryset from Profile model

@@ -88,7 +88,7 @@ def updateAccount(request):
             profile = form.save(commit=False)
             profile.name =profile.name.capitalize()
             profile.username = profile.username.lower()
-            profile.email = profile.email.lower()
+            profile.email = profile.email.lower() if profile.email else None
             form.save()     # request.user.profile gives the existing profile object. so form.save() will update the existing profile. (else profile.save() to update)
             return redirect('my-account')
     return render(request, 'users/profile-form.html', {'form':form})

@@ -6,9 +6,10 @@ import uuid
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100, null=True, blank=True)
     email = models.EmailField(max_length=100, null=True, blank=True)
-    username = models.CharField(max_length=100)
+    username = models.CharField(max_length=100, unique=True)
     location = models.CharField(max_length=200, null=True, blank=True)
     short_intro = models.CharField(max_length=200, null=True, blank=True)
     bio = models.TextField(default='User hasn\'t set bio yet.', null=True, blank=True)
@@ -22,7 +23,7 @@ class Profile(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 
     def __str__(self):
-        return str(self.name)
+        return str(self.first_name) + ' ' + str(self.last_name)
 
 
 class Skill(models.Model):
@@ -33,7 +34,7 @@ class Skill(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 
     def __str__(self):
-        return f"{self.name} - ({self.owner.name})"
+        return f"{self.name} - ({self.owner.first_name})"
     
     class Meta:
         ordering = ['owner', '-description']
