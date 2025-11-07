@@ -32,7 +32,11 @@ class Review(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 
     def __str__(self):
-        return str(self.value)
+        return f'{self.project.title} - {self.value}'
+    
+    class Meta:
+        # unique_together = [['owner', 'project']]  # one review per user per project
+        ordering = ['-created']  # latest review first
     
 
 class Tag(models.Model):

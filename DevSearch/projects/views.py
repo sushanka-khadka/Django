@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Project, Tag
 from .utils import searchProject, paginateProject
-from .forms import ProjectForm
+from .forms import ProjectForm, ReviewForm
 
 # Create your views here.
 def projects(request):
@@ -18,8 +18,23 @@ def projects(request):
 
 
 def project(request, pk):
-    project = Project.objects.get(id=pk)
-    return render(request, 'projects/single-project.html', {'project' : project})
+    projectObj = Project.objects.get(id=pk)
+    form = ReviewForm()
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.project = projectObj
+            review.owner = request.user.profile if request.user.is_authenticated else None
+            review.save()
+            # Update project vote count
+            # projectObj.getVoteCount
+
+            messages.success(request, 'Your review was successfully submitted!')
+            return redirect('project', pk=projectObj.id)
+
+
+    return render(request, 'projects/single-project.html', {'project' : projectObj, 'form':form})
 
 @login_required(login_url='login')
 def createProject(request):
@@ -56,7 +71,8 @@ def updateProject(request, pk):
 
             # field that doesn't belong to ModelForm need to be manually handled
             # new_tags = request.POST['newtags']    will raise KeyError if 'newtags' not in POST data
-            new_tags = request.POST.get('newtags').split(',')  # get new tags from textarea, convert comma separated string to list
+            new_tags = request.POST.get('newtags')  
+            new_tags = [] if new_tags == '' else new_tags.split(',')  # get new tags from textarea (only if available), convert comma separated string to list
 
             for tag in new_tags:
                 tag_obj, created = Tag.objects.get_or_create(name=tag.title())   # avoid duplicate tags by using get_or_create
