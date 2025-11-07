@@ -13,7 +13,7 @@ def searchProject(request):
         Q(description__icontains = search_query) |
         Q(owner__name__icontains = search_query) |
         Q(tags__in = tags)
-    )   # # projects as a queryset from Project model
+    ).distinct()   # # projects as a queryset from Project model
 
     return projects, search_query    
 

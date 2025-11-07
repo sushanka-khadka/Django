@@ -14,13 +14,29 @@
                 {% for field in form %}
                 <div class="form__field">
                     <label for="formInput#text">{{ field.label }} </label>
+
+                    {% if field.name == 'tags' %}
+                    <div class="checkbox-grid">
+                        {% for subfield in field %}
+                        <div class="checkbox-item">{{ subfield }}</div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
                     {{ field }}
+                    {% endif %}
 
                     {% for error in field.errors %}
                     <p style="color: red;">{{error}}</p>
                     {% endfor %}
                 </div>
                 {% endfor %}
+
+                <!-- new additional tags -->
+                <div class="form__field">
+                    <label for="formInput#text">Additional Tags</label>
+                    <textarea class="input" name="newtags" placeholder="Add tags here... comma(,) separated"></textarea>
+                </div>
+
                 <input class="btn btn--sub btn--lg" type="submit" value="Submit">
             </form>
         </div>

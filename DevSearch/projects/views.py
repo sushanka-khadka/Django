@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Project
+from .models import Project, Tag
 from .utils import searchProject, paginateProject
 from .forms import ProjectForm
 
@@ -32,6 +32,12 @@ def createProject(request):
             project.title = project.title.title()
 
             form.save()     # save the new project instance
+
+            new_tags = request.POST.get('newtags').split(',')  # get new tags from textarea,
+            for tag in new_tags:
+                tag_obj, created = Tag.objects.get_or_create(name=tag.title())   # avoid duplicate tags by using get_or_create
+                project.tags.add(tag_obj)   # add tag to project's tags M2M field
+
             messages.success(request, 'Project created successfully.')
             return redirect('my-account')
     return render(request, 'projects/project-form.html', {'form':form})
@@ -46,13 +52,19 @@ def updateProject(request, pk):
         if form.is_valid():
             project = form.save(commit=False)
             project.title = project.title.title()
-             
-            # Save the updated project instance
-            form.save() # or project.save()            
+            project.save()  # save updated project instance
+
+            # field that doesn't belong to ModelForm need to be manually handled
+            # new_tags = request.POST['newtags']    will raise KeyError if 'newtags' not in POST data
+            new_tags = request.POST.get('newtags').split(',')  # get new tags from textarea, convert comma separated string to list
+
+            for tag in new_tags:
+                tag_obj, created = Tag.objects.get_or_create(name=tag.title())   # avoid duplicate tags by using get_or_create
+                project.tags.add(tag_obj)   # add tag to project's tags M2M field
             
             messages.success(request, 'Project updated successfully.')
             return redirect('my-account')
-    return render(request, 'projects/project-form.html', {'form':form})
+    return render(request, 'projects/project-form.html', {'form':form, 'project':project})
 
 @login_required(login_url='login')
 def deleteProject(request, pk):
