@@ -19,8 +19,7 @@ def projects(request):
 
 def project(request, pk):
     projectObj = Project.objects.get(id=pk)
-    reviewers_ids = projectObj.reviewers
-    
+    reviewers_ids = projectObj.reviewers    # get list of reviewer(profile) ids for this project using model property
     form = ReviewForm()    
     if request.method == 'POST':
         form = ReviewForm(request.POST)
@@ -29,12 +28,13 @@ def project(request, pk):
             review.project = projectObj
             review.owner = request.user.profile if request.user.is_authenticated else None
             review.save()
+
             # Update project vote count
-            # projectObj.getVoteCount
+            projectObj.getVoteCount
+            projectObj.save()   # save updated vote count to DB
 
             messages.success(request, 'Your review was successfully submitted!')
             return redirect('project', pk=projectObj.id)
-
     return render(request, 'projects/single-project.html', {'project' : projectObj, 'form':form, 'reviewers_ids':reviewers_ids})
 
 @login_required(login_url='login')

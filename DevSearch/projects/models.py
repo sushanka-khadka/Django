@@ -20,8 +20,19 @@ class Project(models.Model):
 
     @property       # to access as an attribute(project.reviewers) instead of method (project.reviewers())
     def reviewers(self):
-        return self.review_set.all().values_list('owner__id', flat=True)    # get list of reviewer(profile) ids for this project
+        # filter review that doesn't have owner (in case owner profile is deleted)
+        available_reviewers = self.review_set.filter(owner__isnull=False)   # avoid NoneType error
+        return available_reviewers.values_list('owner__id', flat=True)  # get list of reviewer(profile) ids for this project
     
+    
+    @property
+    def getVoteCount(self):
+        reviews = self.review_set.all()
+        totalVotes = reviews.count()
+        upVotes = reviews.filter(value='up').count()
+
+        self.vote_total = totalVotes
+        self.vote_ratio = int(upVotes / totalVotes * 100)  if totalVotes > 0 else 0     # avoid division by zero    
     
 class Review(models.Model):
     Vote_Type = (

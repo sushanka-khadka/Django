@@ -72,7 +72,7 @@
                     </form>
 
                     {% else %}
-                    <p><a href="{% url 'login' %}?next=/projects/project/{{project.id}}">Please login to leave a review.</a></p>
+                    <p><a href="{% url 'login' %}?next={{request.path}}">Please login to leave a review.</a></p>
                     {% endif %}
 
 
