@@ -20,6 +20,11 @@ def projects(request):
 def project(request, pk):
     projectObj = Project.objects.get(id=pk)
     form = ReviewForm()
+    
+    reviewers = [review.owner for review in projectObj.review_set.all()]
+    user_has_reviewed = True if (request.user.is_authenticated and request.user.profile in reviewers) else False
+    print("Reviewers:", reviewers)
+    print("User has reviewed:", user_has_reviewed)
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
@@ -33,8 +38,7 @@ def project(request, pk):
             messages.success(request, 'Your review was successfully submitted!')
             return redirect('project', pk=projectObj.id)
 
-
-    return render(request, 'projects/single-project.html', {'project' : projectObj, 'form':form})
+    return render(request, 'projects/single-project.html', {'project' : projectObj, 'form':form, 'user_has_reviewed':user_has_reviewed,})
 
 @login_required(login_url='login')
 def createProject(request):

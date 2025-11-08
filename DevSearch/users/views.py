@@ -90,7 +90,8 @@ def updateAccount(request):
         form = ProfileForm(request.POST, request.FILES, instance=profile) # request.FILES contains any uploaded files, such as images or documents.(only works with enctype="multipart/form-data" in form tag)
         if form.is_valid():
             profile = form.save(commit=False)
-            profile.name =profile.name.capitalize()
+            profile.first_name =profile.first_name.title()
+            profile.first_name =profile.first_name.title()
             profile.username = profile.username.lower()
             profile.email = profile.email.lower() if profile.email else None
             form.save()     # request.user.profile gives the existing profile object. so form.save() will update the existing profile. (else profile.save() to update)

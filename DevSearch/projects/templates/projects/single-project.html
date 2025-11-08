@@ -49,8 +49,13 @@
                         {{ project.vote_ratio }}% Postitive Feedback ({{ project.vote_total }} 
                         Vote{{project.vote_total|pluralize:"s" }})
                     </h5>
+                    {% if request.user.profile == project.owner %}
+                    <p>You cannot review your own work.</p>
 
-                    {% if request.user.is_authenticated %}
+                    {% elif user_has_reviewed %}
+                    <p>You have already reviewed this project.</p>
+
+                    {% elif request.user.is_authenticated %}
                     <form class="form" action="" method="POST">
                         {% csrf_token %}
                         {% for field in form %}
@@ -65,6 +70,7 @@
                         {% endfor %}
                         <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
                     </form>
+
                     {% else %}
                     <p><a href="{% url 'login' %}?next=/projects/project/{{project.id}}">Please login to leave a review.</a></p>
                     {% endif %}
