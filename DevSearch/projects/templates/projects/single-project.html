@@ -52,7 +52,7 @@
                     {% if request.user.profile == project.owner %}
                     <p>You cannot review your own work.</p>
 
-                    {% elif user_has_reviewed %}
+                    {% elif request.user.profile.id in reviewers_ids %}
                     <p>You have already reviewed this project.</p>
 
                     {% elif request.user.is_authenticated %}

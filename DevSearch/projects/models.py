@@ -18,7 +18,11 @@ class Project(models.Model):
     def __str__(self):
         return str(self.title)
 
-
+    @property       # to access as an attribute(project.reviewers) instead of method (project.reviewers())
+    def reviewers(self):
+        return self.review_set.all().values_list('owner__id', flat=True)    # get list of reviewer(profile) ids for this project
+    
+    
 class Review(models.Model):
     Vote_Type = (
         ('up', 'Up Vote'),
@@ -37,6 +41,7 @@ class Review(models.Model):
     class Meta:
         # unique_together = [['owner', 'project']]  # one review per user per project
         ordering = ['-created']  # latest review first
+
     
 
 class Tag(models.Model):
