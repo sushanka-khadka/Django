@@ -10,13 +10,16 @@ class Project(models.Model):
     source_link = models.URLField(max_length=200, null=True, blank=True)
     demo_link = models.URLField(max_length=200, null=True, blank=True)
     tags = models.ManyToManyField('Tag', blank=True)
-    vote_total = models.IntegerField(default=0, null=True, blank=True)
-    vote_ratio = models.IntegerField(default=0, null=True, blank=True)
+    vote_total = models.IntegerField(default=0, null=True, blank=True, editable=False)  # disable editing in admin panel as well on model field
+    vote_ratio = models.IntegerField(default=0, null=True, blank=True, editable=False)  # disable editing in admin panel
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 
     def __str__(self):
         return str(self.title)
+    
+    class Meta:
+        ordering = ['-vote_ratio', '-vote_total', 'created']  # ascending vote_ratio, descending vote_total, ascending title
 
     @property       # to access as an attribute(project.reviewers) instead of method (project.reviewers())
     def reviewers(self):
@@ -53,7 +56,6 @@ class Review(models.Model):
         # unique_together = [['owner', 'project']]  # one review per user per project
         ordering = ['-created']  # latest review first
 
-    
 
 class Tag(models.Model):
     name = models.CharField(max_length=200)    

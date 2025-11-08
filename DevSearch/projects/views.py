@@ -28,11 +28,7 @@ def project(request, pk):
             review.project = projectObj
             review.owner = request.user.profile if request.user.is_authenticated else None
             review.save()
-
-            # Update project vote count
-            projectObj.getVoteCount
-            projectObj.save()   # save updated vote count to DB
-
+                        
             messages.success(request, 'Your review was successfully submitted!')
             return redirect('project', pk=projectObj.id)
     return render(request, 'projects/single-project.html', {'project' : projectObj, 'form':form, 'reviewers_ids':reviewers_ids})
