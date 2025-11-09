@@ -147,14 +147,6 @@ def deleteSkill(request, pk):
 from django.core.mail import send_mail
 @login_required(login_url='login')
 def inbox(request):
-    send_mail(      # test email sending
-        "Subject here",
-        "Here is the message.",
-        "from@example.com",
-        ["to@example.com"],
-        fail_silently=False,        # # Set to False to raise exceptions on failure (default is True for silent failure on production).
-    )
-
     user = request.user.profile
     messageRequests = user.messages.all()
     unreadCount = messageRequests.filter(is_read = False).count()

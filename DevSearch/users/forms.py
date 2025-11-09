@@ -8,6 +8,10 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
 
+        help_texts = {
+            'email': 'Optional — leave blank for anonymity, but required for replies and account recovery.'
+        }
+
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
 
@@ -19,6 +23,10 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = '__all__'
         exclude = ['user']
+        
+        help_texts = {
+            'email': 'Optional — leave blank for anonymity, but required for replies and account recovery.'
+        }
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)

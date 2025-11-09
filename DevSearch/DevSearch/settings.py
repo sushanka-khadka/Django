@@ -115,16 +115,22 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Email Configuration
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'     # for development purpose only (prints emails to console)
+# environment variables
+import os
+from dotenv import load_dotenv
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+ # Load environment variables from .env file
+load_dotenv()
+
+# Email Configuration
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'     # for development purpose only (prints emails to console)
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'   # for production (sends real emails)
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'host_user_email'
-EMAIL_HOST_PASSWORD = 'host_user_email_password'
-
+EMAIL_HOST_USER = os.getenv('host_email')  #'host_user_email_address'
+EMAIL_HOST_PASSWORD = os.getenv('host_email_password')  
 
 
 

@@ -21,21 +21,28 @@ def createProfile(sender, instance, created, **kwargs): #  when a User instance 
 
         profile.save()
 
+        # variables for email
         subject = 'Welcome to DevSearch'
-        message = f'Hi {profile.first_name},\n\nThank you for registering at DevSearch.\n\nYour login credentials are:\nUsername: {profile.username}\n\nBest regards,\nDevSearch Team'
+        message = '''Hi {profile.first_name},\n\nThank you for registering at DevSearch.
+        \nYour login credentials are:\nUsername: {profile.username}
+        \nBest regards,\nDevSearch Team'''.format(profile=profile)
+
         from_email = settings.EMAIL_HOST_USER
-        to_emails = [profile.email]
+        to_emails = [profile.email]      # mustn't be empty list else email won't be sent
 
-
-        # sending email on user creation
-        send_mail(
-            subject,
-            message,
-            from_email,
-            to_emails,
-            fail_silently=False,        # Set to False to raise exceptions on failure (default is True for silent failure on production).
-        )
-
+        # sending email on user creation 
+        try:
+            send_mail(
+                subject,
+                message,
+                from_email,
+                to_emails,  # email won't be sent if to_emails is empty even in console backend
+                fail_silently=False,        # Set to False to raise exceptions on failure (default is True for silent failure on production).
+            )
+            print('\nEmail sent successfully to', profile.email)
+        except Exception as e:
+            print('\nError sending welcome email:', e)            
+            
 
 # @receiver(signal=post_save, sender=Profile)
 def updateUser(sender, instance, created, **kwargs):    # when a Profile instance is updated, this user instance will also be updated

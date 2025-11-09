@@ -61,9 +61,9 @@
 
         {{ field }}
 
-        <!-- {% if field.help_text %}
-                <small>{{field.help_text}}</small>
-            {% endif %} -->
+        {% if field.name == 'email' and field.help_text %}
+        <small>{{field.help_text}}</small>
+        {% endif %}
 
         {% for error in field.errors %}
         <p style="color: red;">{{error}}</p>
