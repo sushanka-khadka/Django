@@ -115,6 +115,13 @@ USE_I18N = True
 USE_TZ = True
 
 
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'     # for development purpose only (prints emails to console)
+
+
+
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
