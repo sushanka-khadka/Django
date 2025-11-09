@@ -118,6 +118,12 @@ USE_TZ = True
 # Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'     # for development purpose only (prints emails to console)
 
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'host_user_email'
+EMAIL_HOST_PASSWORD = 'host_user_email_password'
 
 
 

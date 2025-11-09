@@ -1,6 +1,8 @@
 from django.db.models.signals import post_save, post_delete
 from django.contrib.auth.models import User
-from django.dispatch import receiver
+# from django.dispatch import receiver
+from django.core.mail import send_mail
+from django.conf import settings
 from .models import Profile
 
 # @receiver(signal=post_save, sender=User)
@@ -18,6 +20,21 @@ def createProfile(sender, instance, created, **kwargs): #  when a User instance 
         )   # profile instance created    
 
         profile.save()
+
+        subject = 'Welcome to DevSearch'
+        message = f'Hi {profile.first_name},\n\nThank you for registering at DevSearch.\n\nYour login credentials are:\nUsername: {profile.username}\n\nBest regards,\nDevSearch Team'
+        from_email = settings.EMAIL_HOST_USER
+        recipients = [profile.email]
+
+
+        # Test email sending on user creation
+        send_mail(
+        subject,
+        message,
+        from_email,
+        recipients,
+        fail_silently=False,        # Set to False to raise exceptions on failure (default is True for silent failure on production).
+    )
 
 
 # @receiver(signal=post_save, sender=Profile)
