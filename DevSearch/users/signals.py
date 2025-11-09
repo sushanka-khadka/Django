@@ -24,17 +24,17 @@ def createProfile(sender, instance, created, **kwargs): #  when a User instance 
         subject = 'Welcome to DevSearch'
         message = f'Hi {profile.first_name},\n\nThank you for registering at DevSearch.\n\nYour login credentials are:\nUsername: {profile.username}\n\nBest regards,\nDevSearch Team'
         from_email = settings.EMAIL_HOST_USER
-        recipients = [profile.email]
+        to_emails = [profile.email]
 
 
-        # Test email sending on user creation
+        # sending email on user creation
         send_mail(
-        subject,
-        message,
-        from_email,
-        recipients,
-        fail_silently=False,        # Set to False to raise exceptions on failure (default is True for silent failure on production).
-    )
+            subject,
+            message,
+            from_email,
+            to_emails,
+            fail_silently=False,        # Set to False to raise exceptions on failure (default is True for silent failure on production).
+        )
 
 
 # @receiver(signal=post_save, sender=Profile)
