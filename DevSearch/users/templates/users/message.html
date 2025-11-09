@@ -9,22 +9,23 @@
             <a class="backButton" href="{% url 'inbox' %}"><i class="fa-solid fa-angle-left"></i></a>
             <h2 class="message__subject">
                 {% if message.subject %}
-                        {{message.subject}}
-                        {% else %}
-                        [No Subject]
-                        {% endif %}
-            </h4>
-            <a href="profile.html" class="message__author">
-                {% if message.sender_name %}
-                        {{message.sender_name}}
-                        {% else %}
-                        Anonymous User
-                        {% endif %}
-                    </a>
-            <p class="message__date">{{message.created}}</p>
-            <div class="message__body">
-                {{ message.body | linebreaksbr }}
-            </div>
+                {{message.subject}}
+                {% else %}
+                [No Subject]
+                {% endif %}
+                </h4>
+                <a href="{% if message.sender %} {% url 'user-profile' message.sender.id %} {% else %} # {% endif %}"
+                    class="message__author">
+                    {% if message.sender_name %}
+                    {{message.sender_name}}
+                    {% else %}
+                    Anonymous User
+                    {% endif %}
+                </a>
+                <p class="message__date">{{message.created}}</p>
+                <div class="message__body">
+                    {{ message.body | linebreaksbr }}
+                </div>
         </div>
     </div>
 </main>

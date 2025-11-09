@@ -144,7 +144,6 @@ def deleteSkill(request, pk):
     return render(request, 'delete-template.html', {'object':skill, 'type':'skill'})
 
 
-from django.core.mail import send_mail
 @login_required(login_url='login')
 def inbox(request):
     user = request.user.profile

@@ -20,7 +20,7 @@ urlpatterns = [
 
     # Inbox path
     path('inbox/', views.inbox, name='inbox'),
-    path('message<str:pk>/', views.viewMessage, name='view-message'),
+    path('message/<str:pk>/', views.viewMessage, name='view-message'),
     path('create-message/<str:recipient_id>', views.createMessage, name='create-message'),
     
 ]
