@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from .utils import searchProfiles, paginateProfile
-from .models import Profile, Skill
-from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from .models import Profile, Skill, Message
+from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm
 
 # Create your views here.
 def profiles(request):
@@ -142,3 +142,46 @@ def deleteSkill(request, pk):
         messages.success(request, 'Skill deleted successfully.')
         return redirect('my-account')        
     return render(request, 'delete-template.html', {'object':skill, 'type':'skill'})
+
+
+@login_required(login_url='login')
+def inbox(request):
+    user = request.user.profile
+    messageRequests = user.messages.all()
+    unreadCount = messageRequests.filter(is_read = False).count()
+
+    return render(request, 'users/inbox.html', {'messageRequests':messageRequests, 'unreadCount':unreadCount})
+
+
+@login_required(login_url='login')
+def viewMessage(request, pk):
+    message = Message.objects.get(id=pk)
+    if message.is_read == False:
+        message.is_read = True
+        message.save()  # mark message as read
+    
+    return render(request, 'users/message.html', {'message':message})
+
+
+def createMessage(request, recipient_id):
+    recipient = Profile.objects.get(id=recipient_id)
+    form = MessageForm()
+
+    sender = request.user.profile if request.user.is_authenticated else None   
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = sender
+            message.recipient = recipient
+            message.subject = message.subject.title() if message.subject else ''
+
+            if sender:   # if sender is logged in
+                message.sender_name = sender.first_name + ' ' + (sender.last_name if sender.last_name else '')
+                message.sender_email = sender.email
+
+            form.save()  # save the message instance           
+            messages.success(request, 'Your message was sent successfully!')
+            return redirect('user-profile', pk=recipient.id)
+
+    return render(request, 'users/message-form.html', {'form':form, 'recipient':recipient})

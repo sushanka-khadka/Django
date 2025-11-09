@@ -39,3 +39,20 @@ class Skill(models.Model):
     class Meta:
         ordering = ['owner', '-description']
         
+
+class Message(models.Model):
+    sender = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)       # sender can send message anonymously, so null and blank are True
+    recipient = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True, related_name='messages')    # message history matters, so we messages are preserved even if recipient profile is deleted
+    sender_name = models.CharField(max_length=100, null=True, blank=True)   # if sender profile is deleted
+    sender_email = models.EmailField(max_length=200, null=True, blank=True)      # in case sender is anonymous
+    subject = models.CharField(max_length=200, null=True, blank=True)
+    body = models.TextField()
+    is_read = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
+    def __str__(self):
+        return str(self.subject)
+    
+    class Meta:
+        ordering = ['is_read', '-created']

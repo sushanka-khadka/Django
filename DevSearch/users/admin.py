@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Skill
+from .models import Profile, Skill, Message
 
 
 # Register your models here.
@@ -12,3 +12,8 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 # admin.site.register(Profile, ProfileAdmin)    # not needed if decorator is used 
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ['subject', 'sender', 'recipient', 'is_read', 'created']
+    

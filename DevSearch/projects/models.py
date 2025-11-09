@@ -19,7 +19,7 @@ class Project(models.Model):
         return str(self.title)
     
     class Meta:
-        ordering = ['-vote_ratio', '-vote_total', 'created']  # ascending vote_ratio, descending vote_total, ascending title
+        ordering = ['-vote_ratio', '-vote_total', '-created']  
 
     @property       # to access as an attribute(project.reviewers) instead of method (project.reviewers())
     def reviewers(self):

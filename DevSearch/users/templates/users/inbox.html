@@ -1,0 +1,66 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<!-- Main Section -->
+<main class="inbox my-xl">
+    <div class="content-box">
+        <h3 class="inbox__title">New Messages(<span>{{ unreadCount }}</span>)</h3>
+        {% if messageRequests %}
+        <ul class="messages">
+            {% for message in messageRequests %}
+            {% if message.is_read %}
+            <li class="message message--read">
+                <a href="{% url 'view-message' message.id %}">                    
+                    <span class="message__author">
+                        {% if message.sender_name %}
+                        {{message.sender_name}}
+                        {% else %}
+                        Anonymous User
+                        {% endif %}
+                    </span>
+                    
+                    <span class="message__subject">
+                        {% if message.subject %}
+                        {{message.subject}}
+                        {% else %}
+                        [No Subject]
+                        {% endif %}
+                    </span>
+                    <span class="message__date">{{message.created}}</span>
+                </a>
+            </li>
+            
+            {% else %}
+            <li class="message message--unread">
+                <a href="{% url 'view-message' message.id %}">                    
+                    <span class="message__author">
+                        {% if message.sender_name %}
+                        {{message.sender_name}}
+                        {% else %}
+                        Anonymous User
+                        {% endif %}
+                    </span>
+                    
+                    <span class="message__subject">
+                        {% if message.subject %}
+                        {{message.subject}}
+                        {% else %}
+                        [No Subject]
+                        {% endif %}
+                    </span>
+                    <span class="message__date">{{message.created}}</span>
+                </a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        
+        {% else %}
+        <p>No messages in your inbox.</p>
+        {% endif %}
+    </div>
+</main>
+
+
+{% endblock %}
