@@ -1,2 +1,38 @@
-__pycache__
-migrations
+# ----------------------------
+# Python
+# ----------------------------
+__pycache__/
+
+# Virtual environment
+.venv/
+
+# ----------------------------
+# Django
+# ----------------------------
+db.sqlite3
+media/
+staticfiles/
+static/images
+
+# ----------------------------
+# Environment files
+# ----------------------------
+.env
+*.env
+.env.*
+
+
+# ----------------------------
+# Docker
+# ----------------------------
+docker-compose.override.yml
+*.dockerignore
+*.log
+*.md
+
+
+
+# ----------------------------
+# IDEs / Editors
+# ----------------------------
+.vscode/
