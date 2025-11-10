@@ -44,6 +44,9 @@ USER appuser
 # Copy the source code into the container.
 COPY . .
 
+# Run collectstatic at build time
+RUN python manage.py collectstatic --noinput
+
 # Expose the port that the application listens on.
 EXPOSE 8000
 
