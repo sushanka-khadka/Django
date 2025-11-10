@@ -24,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import os
 from dotenv import load_dotenv
 
-# Render will mount .env at /app/.env
-dotenv_path = '/app/.env'
+# Render will mount .env at /ect/secrets/.env
+dotenv_path = '/ect/secrets/.env'
 
 if os.path.exists(dotenv_path):
     load_dotenv(dotenv_path)
