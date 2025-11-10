@@ -24,8 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import os
 from dotenv import load_dotenv
 
- # Load environment variables from .env file
-load_dotenv()
+# Render will mount .env at /app/.env
+dotenv_path = '/app/.env'
+
+if os.path.exists(dotenv_path):
+    load_dotenv(dotenv_path)
+else:
+    load_dotenv()  # fallback to default .env in current directory
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
