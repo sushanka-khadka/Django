@@ -22,29 +22,37 @@ services:
 # database data between container restarts. The `db-password` secret is used
 # to set the database password. You must create `db/password.txt` and add
 # a password of your choosing to it before running `docker compose up`.
-#     depends_on:
-#       db:
-#         condition: service_healthy
-#   db:
-#     image: postgres
-#     restart: always
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres
+    restart: always    
+    env_file:
+      - .env
 #     user: postgres
 #     secrets:
 #       - db-password
-#     volumes:
-#       - db-data:/var/lib/postgresql/data
-#     environment:
+    volumes:
+      # - db-data:/var/lib/postgresql/data   # <-- old for 13-17
+      - db-data:/var/lib/postgresql   # <-- updated for 18+
+    # environment:
+      # PGPORT: 5433  # Postgres listens internally on 5433
 #       - POSTGRES_DB=example
 #       - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
-#     expose:
-#       - 5432
-#     healthcheck:
-#       test: [ "CMD", "pg_isready" ]
-#       interval: 10s
-#       timeout: 5s
-#       retries: 5
-# volumes:
-#   db-data:
+    # ports:
+      # - "5433:5432"  # maps container port 5433 to host port 5433
+    expose:
+      - 5432  # makes port 5432 available to other services (like 'server')
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-p", "5432"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  db-data:
 # secrets:
 #   db-password:
 #     file: db/password.txt
