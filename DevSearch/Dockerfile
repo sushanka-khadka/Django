@@ -52,7 +52,7 @@ USER appuser
 # Run collectstatic at build time
 RUN python manage.py collectstatic --noinput
 # Run database migrations at build time
-RUN python manage.py migrate
+RUN python manage.py migrate --noinput
 # Expose the port that the application listens on.
 EXPOSE 8000
 
