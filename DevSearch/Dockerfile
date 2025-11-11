@@ -56,4 +56,4 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # Run migrations at startup and start the Gunicorn server.
-CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn DevSearch.wsgi:application --bind"]
+CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn DevSearch.wsgi:application --bind 0.0.0.0:8000"]
