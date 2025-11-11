@@ -51,10 +51,9 @@ USER appuser
 
 # Run collectstatic at build time
 RUN python manage.py collectstatic --noinput
-# Run database migrations at build time
-RUN python manage.py migrate --noinput
+
 # Expose the port that the application listens on.
 EXPOSE 8000
 
-# Run the application.
-CMD ["gunicorn", "DevSearch.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Run migrations at startup and start the Gunicorn server.
+CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn DevSearch.wsgi:application --bind"]
