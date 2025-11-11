@@ -42,15 +42,17 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 # Copy the source code into the container. (as root)
 COPY . .
 
-# Create and give permissions for staticfiles directory
-RUN mkdir -p /app/staticfiles && chown -R appuser:appuser /app/staticfiles
+# Create the directory for static files and set ownership to the non-privileged user.(so that user can upload files also)
+RUN mkdir -p /app/staticfiles && chown -R appuser:appuser /app/staticfiles && \
+    mkdir -p /app/media && chown -R appuser:appuser /app/media
 
 # Switch to the non-privileged user to run the application.
 USER appuser
 
 # Run collectstatic at build time
 RUN python manage.py collectstatic --noinput
-
+# Run database migrations at build time
+RUN python manage.py migrate
 # Expose the port that the application listens on.
 EXPOSE 8000
 
